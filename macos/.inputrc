@@ -1,0 +1,13 @@
+if [[ $- =~ i ]]; then
+  bind '"\er": redraw-current-line'     # clears prompt when not on tmux
+
+  # To use these keybindings, press Ctrl+g, noted as \C-g below, then press Ctrl+the second key listed.
+  # For example, \C-g\C-f means press Ctrl+g, release, then press Ctrl+f.
+  # This will execute the function defined on the right side of the binding, then redraw the current line.
+  bind '"\C-g\C-f": "$(_gf)\e\C-e\er"'  # diff of files listed in git status
+  bind '"\C-g\C-b": "$(_gb)\e\C-e\er"'  # list of git branches
+  bind '"\C-g\C-t": "$(_gt)\e\C-e\er"'  # list of git tags
+  bind '"\C-g\C-h": "$(_gh)\e\C-e\er"'  # list of commit hashes
+  bind '"\C-g\C-r": "$(_gr)\e\C-e\er"'  # list of remotes
+  bind '"\C-g\C-s": "$(_gs)\e\C-e\er"'  # list of git stashes with diffs
+fi
