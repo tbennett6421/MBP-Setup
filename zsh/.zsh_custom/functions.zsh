@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 function md() {
-  mkdir -p "$@" && cd "$@"
+    mkdir -p "$@" && cd "$@"
 }
 
 # find shorthand
@@ -26,31 +26,30 @@ function h2d() { printf '%d\n' 0x"$1"; }
 # Convert decimal to hex
 function d2h() { printf '%x\n' "$1"; }
 
-# Switch to branch
-function fbs() {
-  local branches branch
-  branches=$(git branch) &&
-    branch=$(echo "$branches" | fzf +m) &&
-    git switch $(echo "$branch" | sed "s/.* //")
+function backup() {
+    cp "$1"{,.bak};
 }
 
-# Delete a branch
-function fbd() {
-  local branches branch
-  branches=$(git branch) &&
-    branch=$(echo "$branches" | fzf +m) &&
-    git branch -d $(echo "$branch" | sed "s/.* //")
-}
-
-# git log --author
-function gla() { git log --author "$1"; }
-
-# Accept java version, java --version, and java -version
-function java() {
-  case $* in
-    -v|--version|version) shift 1; command java -version ;;
-    *) command java "$@" ;;
-  esac
+function extract() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *.rar)       unrar e $1     ;;
+            *)     echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
 
 # Print out a color table
@@ -116,67 +115,35 @@ function fix() {
   fi
 }
 
-# https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
-# GIT heart FZF
-# -------------
-
-is_in_git_repo() {
-  git rev-parse HEAD > /dev/null 2>&1
+function sort_excluding_header(){
+    awk 'NR<2{print $0;next}{print $0 | "sort" }';
 }
 
-fzf-down() {
-  fzf --height 50% --min-height 20 --border --bind ctrl-/:toggle-preview "$@"
+# Docker functions
+dock-run() { sudo docker run -i -t --privileged $@ ;}
+dock-exec() { sudo docker exec -i -t $@ /bin/bash ;}
+dock-log() { sudo docker logs --tail=all -f $@ ;}
+dock-port() { sudo docker port $@ ;}
+dock-vol() { sudo docker inspect --format '{{ .Volumes }}' $@ ;}
+dock-ip() { sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' $@ ;}
+dock-rmc() { sudo docker rm sudo docker ps -qa --filter 'status=exited' ;}
+dock-rmi() { sudo docker rmi -f sudo docker images | grep '^<none>' | awk '{print $3}' ;}
+dock-stop() { sudo docker stop $(docker ps -a -q); }
+dock-rm() { sudo docker rm $(docker ps -a -q); }
+
+function last {
+    ls -lt $1 | head
 }
 
-# diff of files listed in git status
-_gf() {
-  is_in_git_repo || return
-  git -c color.status=always status --short |
-  fzf-down -m --ansi --nth 2..,.. \
-    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1})' |
-  cut -c4- | sed 's/.* -> //'
+# copy a file to the clipboard from the command line
+function copyfile {
+    cat $1 | xclip -selection clipboard
 }
 
-# list of git branches
-_gb() {
-  is_in_git_repo || return
-  git branch -a --color=always | grep -v '/HEAD\s' | sort |
-  fzf-down --ansi --multi --tac --preview-window right:70% \
-    --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1)' |
-  sed 's/^..//' | cut -d' ' -f1 |
-  sed 's#^remotes/##'
+function pynew() {
+    mkdir -p "$1" && cd "$1"
+    pyenv virtualenv "$2" "$1"-"$2"
+    pyenv local "$1"-"$2"
+    [ -e "requirements.txt" ] && pip install -r requirements.txt  
 }
 
-# list of git tags
-_gt() {
-  is_in_git_repo || return
-  git tag --sort -version:refname |
-  fzf-down --multi --preview-window right:70% \
-    --preview 'git show --color=always {}'
-}
-
-# list of commit hashes
-_gh() {
-  is_in_git_repo || return
-  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
-  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-    --header 'Press CTRL-S to toggle sort' \
-    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
-  grep -o "[a-f0-9]\{7,\}"
-}
-
-# list of remotes
-_gr() {
-  is_in_git_repo || return
-  git remote -v | awk '{print $1 "\t" $2}' | uniq |
-  fzf-down --tac \
-    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1}' |
-  cut -d$'\t' -f1
-}
-
-# list of git stashes with diffs
-_gs() {
-  is_in_git_repo || return
-  git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
-  cut -d: -f1
-}
