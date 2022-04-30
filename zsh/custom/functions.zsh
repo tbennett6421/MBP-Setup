@@ -140,6 +140,11 @@ function copyfile {
     cat $1 | xclip -selection clipboard
 }
 
+# named after screen -Rd
+function tmux-reattach-session {
+    tmux attach -t $1 2>/dev/null || tmux new -s $1 2>/dev/null
+}
+
 function pynew() {
     mkdir -p "$1" && cd "$1"
     pyenv virtualenv "$2" "$1"-"$2"

@@ -112,8 +112,9 @@ alias gfa='git fetch --all'
 #alias gbls="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n"
 #alias gkd='git ksdiff'
 #alias glc='git log -p --follow -n 1'
-alias git_init='git config user.email tbennett6421@gmail.com && git config user.name "Tyler Bennett" && git config core.editor vim && git config diff.tool vimdiff && git config difftool.prompt false'
-alias git_revert_file="git checkout HEAD -- "
+alias git-init='git config user.email tbennett6421@gmail.com && git config user.name "Tyler Bennett" && git config core.editor vim && git config diff.tool vimdiff && git config difftool.prompt false'
+alias git-revert-file="git checkout HEAD -- "
+alias git-diff-head="git diff HEAD "
 alias git-set-ssh="git remote set-url origin "
 alias gcot="git checkout"
 alias gchekout="git checkout"
@@ -144,8 +145,14 @@ alias rsync-copy="rsync -avhP"
 alias wget-mirror-page="wget -p -k"
 
 ### User Definitions ###
+### 7zip ###
+alias 7z-extracthere="7z e "
+alias 7z-unarchive="7z x "
+alias 7z-cmax="7z a -t7z -m0=lzma -mx=9 "
+alias 7z-cextreme="7z a -t7z -m0=lzma -mx=9 -md=32m -ms=on "
 alias beep='echo -e "\a\c"'
 alias beep-lots='while :; do beep; sleep 1; done'
+### brew ### 
 alias brewa="arch -arm64 brew "
 alias brewai="arch -arm64 brew install"
 alias brewarm="arch -arm64 brew "
@@ -153,6 +160,8 @@ alias brewarmi="arch -arm64 brew install"
 alias brewls="brew list"
 alias br="source ~/.bashrc"
 alias zr="source ~/.zshrc"
+### cd ### 
+alias cdzcustom="cd ~/.oh-my-zsh/custom/"
 alias hd_health='find /dev -regex "/dev/sd." -exec smartctl -l selftest {} \;'
 alias headtail5="sed -ne'1,4{p;b};5{x;s/$/.../;x;G;p;b};:a;$p;N;11,$D;ba'"
 alias headtail10="sed -ne'1,9{p;b};10{x;s/$/.../;x;G;p;b};:a;$p;N;21,$D;ba'"
@@ -184,6 +193,12 @@ alias py-virt-new="pyenv virtualenv "
 alias py-virt-ls="pyenv virtualenvs"
 alias pywhich="pyenv which"
 alias pyw="pyenv which"
+### salt ###
+alias salt-alive="salt '*' test.ping"
+alias salt-applystate="salt '*' state.apply"
+alias salt-targetwindows="salt -C 'G@os:Windows' "
+alias salt-slowly="salt -b 1 --batch-wait 60 "
+alias salt-crawl="salt -b 1 --batch-wait 360 "
 ### ssh ###
 alias fingerprint='ssh-keygen -lf'
 alias newkey='ssh-keygen -y -f'
@@ -197,17 +212,22 @@ alias sa="screen-attach"
 alias sl="screen-list"
 alias sn="screen-new"
 ### tmux ###
-alias ta="tmux attach -t "             #Attach new tmux session to already running named session
-alias tad="tmux attach -d -t "         #Detach named tmux session
-alias ts="tmux new-session -s "        #Create a new named tmux session
+#alias ta="tmux attach -t "             #Attach new tmux session to already running named session
+#alias tad="tmux attach -d -t "         #Detach named tmux session
+alias ta="tmux-reattach "
+alias tad="tmux-reattach "
 alias tl="tmux list-sessions"          #Displays a list of running tmux sessions
 alias tksv="tmux kill-server"          #Terminate all running tmux sessions
 alias tkss="tmux kill-session -t "     #Terminate named running tmux session
+alias tmux-reattach="tmux-reattach-session"
 alias tmuxconf="$EDITOR $ZSH_TMUX_CONFIG"  #Open .tmux.conf file with an editor
 alias tmuxreload="tmux source-file $ZSH_TMUX_CONFIG"
 #alias sort_dir_by_size="du -ha --max-depth=1 | sort -h"
 alias trim='awk '\''{$1=$1};1'\'''
-alias usage='du -ch | grep total'
+alias du-usage='du -ch | grep total'
+### usage ###
+alias usage-ansible-usage="echo ansible -u<user> -i<inventory> -C<dry-run> -k<ask-ssh> -K<ask-become> -m<module> -a<module-args>"
+alias usage-ansible-playbook-usage="echo ansible-playbook -u<user> -i<inventory> -C<dry-run> -k<ask-ssh> -K<ask-become> --step<pause-between-tasks> playbook.yml"
 ### venv ###
 alias ve="python -m venv ./env"
 alias va="source ./env/bin/activate"
