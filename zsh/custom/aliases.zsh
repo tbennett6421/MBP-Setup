@@ -204,34 +204,48 @@ alias fingerprint='ssh-keygen -lf'
 alias newkey='ssh-keygen -y -f'
 alias sshcpi='ssh-copy-id'
 alias cpkey='pbcopy < ~/.ssh/id_rsa.pub'
+#alias sort_dir_by_size="du -ha --max-depth=1 | sort -h"
+alias trim='awk '\''{$1=$1};1'\'''
+alias du-usage='du -ch | grep total'
+
+####################
+###   Software   ### 
+####################
+
 ### screen ###
 alias screen-attach="screen -Rd"
+alias screen-reattach="screen -Rd"
 alias screen-list="screen -ls"
 alias screen-new="screen -S "
 alias sa="screen-attach"
 alias sl="screen-list"
+alias sls="screen-list"
 alias sn="screen-new"
+
 ### tmux ###
-#alias ta="tmux attach -t "             #Attach new tmux session to already running named session
-#alias tad="tmux attach -d -t "         #Detach named tmux session
-alias ta="tmux-reattach "
-alias tad="tmux-reattach "
-alias tl="tmux list-sessions"          #Displays a list of running tmux sessions
-alias tksv="tmux kill-server"          #Terminate all running tmux sessions
-alias tkss="tmux kill-session -t "     #Terminate named running tmux session
+alias tmux-list-sessions="tmux list-sessions"
 alias tmux-reattach="tmux-reattach-session"
-alias tmuxconf="$EDITOR $ZSH_TMUX_CONFIG"  #Open .tmux.conf file with an editor
-alias tmuxreload="tmux source-file $ZSH_TMUX_CONFIG"
-#alias sort_dir_by_size="du -ha --max-depth=1 | sort -h"
-alias trim='awk '\''{$1=$1};1'\'''
-alias du-usage='du -ch | grep total'
+alias tmux-reload="tmux source-file $HOME/.tmux.conf"
+alias edit-tmux-local="$EDITOR $HOME/.tmux.conf"
+alias edit-tmux-remote="$EDITOR $HOME/.tmux/tmux.remote.conf"
+alias ta="tmux-reattach"
+alias tad="tmux-reattach"
+alias tra="tmux-reattach"
+alias trl="tmux-reload"
+alias tl="tmux-list-sessions"          #Displays a list of running tmux sessions
+alias tls="tmux-list-sessions"         #Displays a list of running tmux sessions
+#alias tksv="tmux kill-server"          #Terminate all running tmux sessions
+#alias tkss="tmux kill-session -t "     #Terminate named running tmux session
+
 ### usage ###
 alias usage-ansible-usage="echo ansible -u<user> -i<inventory> -C<dry-run> -k<ask-ssh> -K<ask-become> -m<module> -a<module-args>"
 alias usage-ansible-playbook-usage="echo ansible-playbook -u<user> -i<inventory> -C<dry-run> -k<ask-ssh> -K<ask-become> --step<pause-between-tasks> playbook.yml"
+
 ### venv ###
 alias ve="python -m venv ./env"
 alias va="source ./env/bin/activate"
 alias vde="deactivate"
+
 ### vscode ###
 alias vsc="code ."                  # Open the current folder in VS code
 alias vsca="code --add "            # Add folder(s) to the last active window
