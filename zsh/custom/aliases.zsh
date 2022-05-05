@@ -17,22 +17,7 @@ alias la="ls -lAh"
 alias ll="ls -lah"
 alias ldir="ls -d */"
 alias lt='du -sh * | sort -h'
-alias cd..="cd .."
-alias ..="cd .."
-alias ...="cd ../../../"
-alias ....="cd ../../../../"
-alias .....="cd ../../../../"
-alias .4="cd ../../../../"
-alias .5="cd ../../../../.."
-alias desk="cd ~/Desktop"
-alias down="cd ~/Downloads"
-
 ### Shortcuts ###
-alias ccd..="cd"
-alias :q="exit"
-alias bye="exit"
-alias die="exit"
-alias quit="exit"
 alias ff="find . -type f -name"
 alias fd="find . -type d -name"
 alias h="history"
@@ -57,60 +42,47 @@ alias svi='sudo vim'
 alias edit='vim'
 
 ### Useful Commands ###
+alias beep='echo -e "\a\c"'
+alias beep-lots='while :; do beep; sleep .5; done'
+alias br="source $HOME/.bashrc"
+alias zr="source $HOME/.zshrc"
+alias omzr="source $HOME/.oh-my-zsh/oh-my-zsh.sh"
+alias p10kr="source $HOME/.p10k.zsh"
 
 ### Pretty commands
-alias vmount="mount |column -t"
-alias vpath='echo -e ${PATH//:/\\n}'
-alias echo-path='echo -e ${PATH//:/\\n}'
-alias echo-mount="mount |column -t"
+alias pretty-path='echo -e ${PATH//:/\\n}'
+alias pretty-mount='mount |column -t'
+alias echo-mount="pretty-mount"
+alias echo-path="pretty-path"
+alias vmount="pretty-mount"
+alias vpath="pretty-path"
 
 ### Useless stuff ###
 #alias lostterm='export PS1="\[\033[01;32m\]>: "'
 alias busy="cat /dev/urandom | hexdump -C | grep 'ca fe'"
 
-### Derived commands ### 
+### User Definitions ###
 alias chmod-setgid="chmod g+s"
 alias cpy="xclip -selection clipboard"
 alias curl-follow="curl -O -J -L"
-### Docker ###
-#alias dl="sudo docker ps -l -q"
-#alias dps="sudo docker ps"
-#alias di="sudo docker images"
-#alias dip="sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
-#alias dkd="sudo docker run -d -P"
-#alias dki="sudo docker run -i -t -P"
-#alias dex="sudo docker exec -i -t"
-#alias drmf="sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q)"
 alias du1="du -d1"
+alias du-usage='du -ch | grep total'
 alias find-by-name-indir="find . -iname "
 alias find-by-name-root="find / -iname "
-
+alias fixcut='tr -s " "'
 alias gcc-dev="gcc -g -Wall -Wextra -Winline"
 alias grep_for_text="grep -inrI "
-alias header='curl -I'
-alias ls-size="ll -lAS && echo '-------------Smallest-----'"
-alias ls-time="ls -lAt && echo '-------------Oldest-----'"
-alias rsync-copy="rsync -avhP"
-alias wget-mirror-page="wget -p -k"
-
-### User Definitions ###
-alias beep='echo -e "\a\c"'
-alias beep-lots='while :; do beep; sleep 1; done'
-alias br="source ~/.bashrc"
-alias zr="source ~/.zshrc"
-### cd ### 
-alias cdzcustom="cd ~/.oh-my-zsh/custom/"
 alias hd_health='find /dev -regex "/dev/sd." -exec smartctl -l selftest {} \;'
+alias header='curl -I'
 alias headtail5="sed -ne'1,4{p;b};5{x;s/$/.../;x;G;p;b};:a;$p;N;11,$D;ba'"
 alias headtail10="sed -ne'1,9{p;b};10{x;s/$/.../;x;G;p;b};:a;$p;N;21,$D;ba'"
-alias fixcut='tr -s " "'
+alias ls-size="ll -lAS && echo '-------------Smallest-----'"
+alias ls-time="ls -lAt && echo '-------------Oldest-----'"
 alias most="du -hsx * | sort -rh | head -10"
-alias now='date +"%T"'
-alias nowtime="now"
-alias nowdate='date +"%d-%m-%Y"'
+alias rsync-copy="rsync -avhP"
 #alias sort_dir_by_size="du -ha --max-depth=1 | sort -h"
 alias trim='awk '\''{$1=$1};1'\'''
-alias du-usage='du -ch | grep total'
+alias wget-mirror-page="wget -p -k"
 
 ####################
 ###   Software   ### 
@@ -128,6 +100,44 @@ alias brewai="arch -arm64 brew install"
 alias brewarm="arch -arm64 brew "
 alias brewarmi="arch -arm64 brew install"
 alias brewls="brew list"
+
+### cd ###
+alias ccd="cd"
+alias cd..="cd .."
+alias ..="cd .."
+alias ...="cd ../../../"
+alias ....="cd ../../../../"
+alias .....="cd ../../../../"
+alias .4="cd ../../../../"
+alias .5="cd ../../../../.."
+alias desk="cd ~/Desktop"
+alias down="cd ~/Downloads"
+alias cdzcustom="cd ~/.oh-my-zsh/custom/"
+alias cdc="cd /mnt/c/"
+alias cdc-home="cd /mnt/c/Users/$USER"
+alias cdc-desk="cd /mnt/c/Users/$USER/Desktop"
+alias cdc-down="cd /mnt/c/Users/$USER/Downloads"
+
+### date ###
+alias now='date +"%T"'
+alias nowtime="now"
+alias nowdate='date +"%d-%m-%Y"'
+
+### Docker ###
+#alias dl="sudo docker ps -l -q"
+#alias dps="sudo docker ps"
+#alias di="sudo docker images"
+#alias dip="sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+#alias dkd="sudo docker run -d -P"
+#alias dki="sudo docker run -i -t -P"
+#alias dex="sudo docker exec -i -t"
+#alias drmf="sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q)"
+
+### exit ### 
+alias :q="exit"
+alias bye="exit"
+alias die="exit"
+alias quit="exit"
 
 ### git ###
 alias git-init='git config user.email tbennett6421@gmail.com && git config user.name "Tyler Bennett" && git config core.editor vim && git config diff.tool vimdiff && git config difftool.prompt false'
