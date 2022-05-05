@@ -79,6 +79,7 @@ alias headtail10="sed -ne'1,9{p;b};10{x;s/$/.../;x;G;p;b};:a;$p;N;21,$D;ba'"
 alias ls-size="ll -lAS && echo '-------------Smallest-----'"
 alias ls-time="ls -lAt && echo '-------------Oldest-----'"
 alias most="du -hsx * | sort -rh | head -10"
+alias ovpn-addr="ip -f inet addr show $INTERFACE | grep inet[^6] | egrep -o \"[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\" | head -n1"
 alias rsync-copy="rsync -avhP"
 #alias sort_dir_by_size="du -ha --max-depth=1 | sort -h"
 alias trim='awk '\''{$1=$1};1'\'''
@@ -230,10 +231,11 @@ alias salt-crawl="salt -b 1 --batch-wait 360 "
 
 ### ssh ###
 alias genkey="ssh-keygen -t rsa -b 4096"
-alias keytopub='ssh-keygen -y -f'
-alias fingerprint='ssh-keygen -lf'
-alias sshcpi='ssh-copy-id'
-alias cpkey='pbcopy < ~/.ssh/id_rsa.pub'
+alias keytopub="ssh-keygen -y -f"
+alias fingerprint="ssh-keygen -lf"
+alias sshcpi="ssh-copy-id"
+alias cpkey="pbcopy < ~/.ssh/id_rsa.pub"
+alias sockstunnel="ssh -D 1080 "
 
 ### screen ###
 alias screen-attach="screen -Rd"
@@ -246,6 +248,8 @@ alias sls="screen-list"
 alias sn="screen-new"
 
 ### tcpdump ###
+alias tcpdump-capturering="tcpdump -C 1G -W 5 -s0 -w /tmp/ring.pcap "
+alias tcpdump-capturescreen="tcpdump -s0 -n -X "
 
 ### tmux ###
 alias tmux-list-sessions="tmux list-sessions"
@@ -265,6 +269,8 @@ alias tls="tmux-list-sessions"         #Displays a list of running tmux sessions
 ### usage ###
 alias usage-ansible-usage="echo ansible -u<user> -i<inventory> -C<dry-run> -k<ask-ssh> -K<ask-become> -m<module> -a<module-args>"
 alias usage-ansible-playbook-usage="echo ansible-playbook -u<user> -i<inventory> -C<dry-run> -k<ask-ssh> -K<ask-become> --step<pause-between-tasks> playbook.yml"
+alias usage-mergecap="echo mergecap -w merged.pcap data/*.pcap*"
+alias usage-tcpdump="echo tcpdump -c<count> -C<filesize> -G<rotate-seconds> -i<interface> -n<do-not-convert-numbers> -r<source.pcap> -s<snaplen> -w<output-filename> -W<rotate-filecount> -X<print-packet-ascii-hex>"
 
 ### venv ###
 alias ve="python -m venv ./env"
@@ -280,6 +286,13 @@ alias vscn="code --new-window"      # Force to open a new window.
 alias vscr="code --reuse-windows"   # Force to open a file or folder in the last active window.
 alias webify="mogrify -resize 690\> *.png"
 alias whatismyip="curl icanhazip.com"
+
+
+### enum_scripts ###
+### logstash ###
+### zeek ###
+### zfs ###
+
 
 ### Conditional Aliases ###
 if command -v lsb_release &> /dev/null
