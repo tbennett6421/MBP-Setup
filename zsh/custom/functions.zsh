@@ -145,6 +145,23 @@ function tmux-reattach-session {
     tmux attach -t $1 2>/dev/null || tmux new -s $1 2>/dev/null
 }
 
+#killjobs - Run kill on all jobs in a Bash or ZSH shell, allowing one to optionally pass in kill parameters
+#Usage: killjobs [zsh-kill-options | bash-kill-options]
+#With no options, it sends `SIGTERM` to all jobs.
+killjobs () {
+    local kill_list="$(jobs)"
+    if [ -n "$kill_list" ]; then
+        # this runs the shell builtin kill, not unix kill, otherwise jobspecs cannot be killed
+        # the `$@` list must not be quoted to allow one to pass any number parameters into the kill
+        # the kill list must not be quoted to allow the shell builtin kill to recognise them as jobspec parameters
+        kill $@ $(sed --regexp-extended --quiet 's/\[([[:digit:]]+)\].*/%\1/gp' <<< "$kill_list" | tr '\n' ' ')
+    else
+        return 0
+    fi
+
+}
+
+
 function pynew() {
     mkdir -p "$1" && cd "$1"
     pyenv virtualenv "$2" "$1"-"$2"
