@@ -4,6 +4,9 @@ export USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/2010
 export GOPATH=$HOME/go
 export PATH=$PATH:~/.local/bin:/usr/games/
 export OMZC=$HOME/.oh-my-zsh/custom/
+export OFFKIT="/offsec/git/snare-ng"
+export OFFSTAGE="/offsec/stage"
+
 if grep -q Microsoft /proc/version 2>/dev/null; then
     export LESSCHARSET="utf-8"
 fi

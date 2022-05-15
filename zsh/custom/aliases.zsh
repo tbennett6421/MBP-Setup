@@ -290,9 +290,14 @@ alias webify="mogrify -resize 690\> *.png"
 alias whatismyip="curl icanhazip.com"
 
 
-### enum_scripts ###
+### OFFSEC ###
 export OFFKIT="/offsec/git/snare-ng"
+export OFFSTAGE="/offsec/stage"
 
+# offsec commands
+alias ostage="cp -t $OFFSTAGE -R "
+
+# enumeration
 alias enum_dns_zone="$OFFKIT/Enumeration/DNS/enum-domain-zone.sh "
 alias enum_dns_bruteforce="$OFFKIT/Enumeration/DNS/enum-domain-bruteforce.sh "
 alias enum_dns_ip="$OFFKIT/Enumeration/DNS/enum-ip-sweep.sh "
@@ -313,13 +318,16 @@ alias enum_nse_pop="$OFFKIT/Enumeration/POP/pop-nse.sh "
 alias enum_nse_smb="$OFFKIT/Enumeration/SMB/smb-nse.sh "
 alias enum_nse_smtp="$OFFKIT/Enumeration/SMTP/smtp-nse.sh "
 
+# busting
 alias bust_http="$OFFKIT/Enumeration/WEB/http-busting.sh "
 
+# bruteforcing
 alias brute_ftp_hydra="$OFFKIT/Enumeration/FTP/ftp-bruteforce.sh "
 alias brute_ssh_medusa="$OFFKIT/Enumeration/SSH/ssh-brute-medusa.sh "
 alias brute_ssh_hydra="$OFFKIT/Enumeration/SSH/ssh-brute-hydra.sh "
 alias brute_ssh_ncrack="$OFFKIT/Enumeration/SSH/ssh-brute-ncrack.sh "
 
+# other tools
 alias john-unix="john --format=crypt "
 alias john-winlm="john --format=LM "
 alias john-winntlm="john --format=NTLM "
