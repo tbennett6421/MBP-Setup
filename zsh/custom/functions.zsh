@@ -148,7 +148,7 @@ function tmux-reattach-session {
 #killjobs - Run kill on all jobs in a Bash or ZSH shell, allowing one to optionally pass in kill parameters
 #Usage: killjobs [zsh-kill-options | bash-kill-options]
 #With no options, it sends `SIGTERM` to all jobs.
-killjobs () {
+function killjobs () {
     local kill_list="$(jobs)"
     if [ -n "$kill_list" ]; then
         # this runs the shell builtin kill, not unix kill, otherwise jobspecs cannot be killed
@@ -161,6 +161,11 @@ killjobs () {
 
 }
 
+fcuntion vpnipt2lhost() {
+    export LHOST=$(ip -f inet addr show "$1" | grep inet[^6] | egrep -o "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" | head -n1)
+    print exporting LHOST=$LHOST
+    print $LHOST
+}
 
 function pynew() {
     mkdir -p "$1" && cd "$1"

