@@ -365,3 +365,11 @@ set t_u7=
 " Syntax highlighting per extension
 autocmd BufNewFile,BufRead *.sls set syntax=yaml
 
+" Handle tmux $TERM quirks in vim
+if $TERM =~ '^screen-256color'
+    map <Esc>OH <Home>
+    map! <Esc>OH <Home>
+    map <Esc>OF <End>
+    map! <Esc>OF <End>
+endif
+
