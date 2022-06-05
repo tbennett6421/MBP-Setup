@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 # # Overridden commands ###
+alias dir="ls --color=auto"
 alias mkdir="mkdir -pv"
 alias less="less -R"
 alias ls="ls -hpG"
@@ -41,6 +42,7 @@ alias sau="sudo apt-get update"
 alias svi='sudo vim'
 alias edit='vim'
 alias y='yes'
+alias type='cat'
 
 ### Useful Commands ###
 alias beep='echo -e "\a\c"'
@@ -257,6 +259,7 @@ alias tcpdump-capturescreen="tcpdump -s0 -n -X "
 
 ### tmux ###
 alias tmux-list-sessions="tmux list-sessions"
+alias tmux-renumber-windows="tmux movew"
 alias tmux-reattach="tmux-reattach-session"
 alias tmux-reload="tmux source-file $HOME/.tmux.conf"
 alias edit-tmux-local="$EDITOR $HOME/.tmux.conf"
@@ -269,6 +272,8 @@ alias tl="tmux-list-sessions"          #Displays a list of running tmux sessions
 alias tls="tmux-list-sessions"         #Displays a list of running tmux sessions
 #alias tksv="tmux kill-server"          #Terminate all running tmux sessions
 #alias tkss="tmux kill-session -t "     #Terminate named running tmux session
+alias trenum="tmux-renumber-windows"      #Displays a list of running tmux sessions
+alias renumber="tmux-renumber-windows"      #Displays a list of running tmux sessions
 
 ### usage ###
 alias usage-ansible-usage="echo ansible -u<user> -i<inventory> -C<dry-run> -k<ask-ssh> -K<ask-become> -m<module> -a<module-args>"
